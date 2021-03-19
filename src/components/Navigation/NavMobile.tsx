@@ -2,16 +2,15 @@ import Button from "components/Button/Button";
 import ButtonClose from "components/ButtonClose/ButtonClose";
 import Logo from "components/Logo/Logo";
 import SwithNightMode from "components/SwithNightMode/SwithNightMode";
+import { NAVDATABASE, NavItemType } from "data/navigation";
 import React from "react";
 import { NavLink } from "react-router-dom";
-import { NavItemType } from "./Navigation";
 
 export interface NavMobileProps {
-  modalId: string;
-  data: NavItemType[];
+  data?: NavItemType[];
 }
 
-const NavMobile: React.FC<NavMobileProps> = ({ modalId, data }) => {
+const NavMobile: React.FC<NavMobileProps> = ({ data = NAVDATABASE }) => {
   const _renderMenuChild = (item: NavItemType) => {
     return (
       <div
@@ -87,10 +86,7 @@ const NavMobile: React.FC<NavMobileProps> = ({ modalId, data }) => {
           </div>
         </div>
         <span className="absolute right-4 top-4">
-          <ButtonClose
-            containerClassName="text-black dark:text-white"
-            modalToggleId={modalId}
-          />
+          <ButtonClose containerClassName="text-black dark:text-white" />
         </span>
       </div>
       <nav className="flex flex-col items-start py-6 px-5 space-y-2">

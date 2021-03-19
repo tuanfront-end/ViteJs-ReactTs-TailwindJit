@@ -1,17 +1,17 @@
 import React from "react";
 export interface ButtonClose {
   containerClassName?: string;
-  modalToggleId?: string;
+  onClick?: () => {};
 }
 
 const ButtonClose: React.FC<ButtonClose> = ({
   containerClassName = "",
-  modalToggleId,
+  onClick = () => {},
 }) => {
   return (
     <button
       className={`text-2xl flex items-center justify-center ${containerClassName}`}
-      data-ttnc-modal-toggle={modalToggleId}
+      onClick={onClick}
     >
       <span className="sr-only">Close</span>
       <i className="las la-times"></i>

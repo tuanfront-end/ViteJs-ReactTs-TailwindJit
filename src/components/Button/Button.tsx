@@ -1,54 +1,76 @@
-import React, { FC } from "react";
+import React, { ButtonHTMLAttributes, FC } from "react";
+import { LocationStates } from "routers/types";
 
 export interface ButtonProps {
   containerClassName?: string;
-  padding?: string;
+  textSizeClass?: string;
+  spacingClass?: string;
+  colorClass?: string;
+  //
+  loading?: boolean;
   disabled?: boolean;
-  fontSize?: string;
-  modalToggleId?: string;
-  url?: string;
+  type?: ButtonHTMLAttributes<HTMLButtonElement>["type"];
+  href?: keyof LocationStates | "#root" | "";
   size?: string;
+  onClick?: () => {};
 }
 
 const Button: FC<ButtonProps> = ({
-  containerClassName = "",
-  padding = "py-4 px-6 sm:px-8 2xl:px-12",
-  fontSize = "text-xs 2xl:text-sm ",
+  containerClassName = "hover:shadow-md",
+  textSizeClass = "text-base sm:text-sm",
+  spacingClass = "px-3 py-2",
+  colorClass = "bg-primary text-gray-100",
   disabled = false,
-  url = "#root",
+  href,
   children,
-  modalToggleId,
+  type,
+  loading,
+  onClick = () => {},
 }) => {
-  let classes =
-    `ttnc-button inline-flex items-center justify-center text-center leading-none tracking-widest` +
-    " " +
-    "hover:bg-secondary hover:text-white hover:border-secondary dark:hover:bg-secondary dark:hover:text-white dark:hover:border-secondary" +
-    " " +
-    padding +
-    " " +
-    fontSize +
-    " " +
-    containerClassName;
+  const CLASSES = `ttnc-button ${containerClassName} ${textSizeClass} ${spacingClass} ${colorClass}`;
 
-  if (!!url) {
+  const _renderLoading = () => {
     return (
-      <a
-        href={url}
-        className={`${classes}`}
-        data-ttnc-modal-toggle={modalToggleId}
+      <svg
+        className="animate-spin -ml-1 mr-3 h-5 w-5"
+        xmlns="http://www.w3.org/2000/svg"
+        fill="none"
+        viewBox="0 0 24 24"
       >
-        {children || `This Button`}
+        <circle
+          className="opacity-25"
+          cx="12"
+          cy="12"
+          r="10"
+          stroke="currentColor"
+          strokeWidth="3"
+        ></circle>
+        <path
+          className="opacity-75"
+          fill="currentColor"
+          d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"
+        ></path>
+      </svg>
+    );
+  };
+
+  if (!!href) {
+    return (
+      <a href={href} className={`${CLASSES}`} onClick={onClick}>
+        {children || `This is Link`}
       </a>
     );
   }
 
   return (
     <button
-      disabled={disabled}
-      className={classes}
-      data-ttnc-modal-toggle={modalToggleId}
+      disabled={disabled || loading}
+      className={`flex items-center ${CLASSES}`}
+      onClick={onClick}
+      type={type}
     >
-      {children || `This Button`}
+      {loading && _renderLoading()}
+      {children || `This is Button`}
     </button>
   );
 };

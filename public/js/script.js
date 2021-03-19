@@ -1,6 +1,6 @@
 window.addEventListener("load", function () {
   // Please enable return before run build ... after build -> dist  -> js -> remove this return
-  // return;
+  return;
   if (document.getElementById("page-loading")) {
     setTimeout(() => {
       document.getElementById("page-loading").style.display = "none";

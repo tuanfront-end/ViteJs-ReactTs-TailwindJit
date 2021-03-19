@@ -1,19 +1,15 @@
 import React from "react";
-import p4 from "images/p4.png";
-import p6 from "images/p6.png";
-import Button from "components/Button/Button";
-import DropdownPanel from "components/Dropdown/DropdownPanel";
-import DropdownTrigger from "components/Dropdown/DropdownTrigger";
+import placeholder from "images/placeholder.jpg";
 import Dropdown from "components/Dropdown/Dropdown";
-import ButtonPrimary from "components/ButtonPrimary/ButtonPrimary";
 import MyLink from "components/MyLink/MyLink";
+import ButtonPrimary from "components/Button/ButtonPrimary";
 
 const MiniCartDropdown = () => {
   const _renderItem = (index: number) => {
     return (
       <div className="px-8 mini-cart-item flex space-x-3 font-normal text-base relative ">
         <div className="mini-cart-item-image w-3/12 flex-shrink-0">
-          <img src={index ? p4 : p6} alt="" />
+          <img src={index ? placeholder : placeholder} alt="placeholder" />
           <a
             className="absolute inset-0 z-10"
             href="#root"
@@ -50,33 +46,30 @@ const MiniCartDropdown = () => {
           >
             Subtotal: $215.14
           </MyLink>
-          <ButtonPrimary url="/cart">View Cart</ButtonPrimary>
+          <ButtonPrimary href="/cart">View Cart</ButtonPrimary>
 
-          <ButtonPrimary url="/checkout">Checkout</ButtonPrimary>
+          <ButtonPrimary href="/checkout">Checkout</ButtonPrimary>
         </div>
       </div>
     );
   };
 
   return (
-    <Dropdown>
-      <DropdownTrigger containerClassName="py-1 px-2.5 text-opacity-95 hover:text-opacity-100">
-        <span className="relative inline-flex rounded-md shadow-sm">
-          <i className="las la-shopping-bag"></i>
-          <span className="flex absolute h-4 w-4 top-0 right-0 -mt-1 -mr-1">
-            <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-secondary opacity-75"></span>
-            <span
-              className="relative inline-flex items-center justify-center rounded-full h-4 w-4 bg-secondary text-white text-xs font-medium"
-              style={{ fontSize: 9 }}
-            >
-              2
+    <Dropdown popperPlacement="bottom-start">
+      <Dropdown.Trigger>
+        <div className="py-1 px-2.5 text-opacity-95 hover:text-opacity-100">
+          <span className="relative inline-flex rounded-md shadow-sm">
+            <i className="las la-shopping-bag"></i>
+            <span className="flex absolute h-4 w-4 top-0 right-0 -mt-1 -mr-1">
+              <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-secondary opacity-75"></span>
+              <span className="relative inline-flex items-center justify-center rounded-full h-4 w-4 bg-secondary text-white text-xs font-medium text-[9]">
+                2
+              </span>
             </span>
           </span>
-        </span>
-      </DropdownTrigger>
-      <DropdownPanel popperPlacement="bottom-end">
-        {_renderContent()}
-      </DropdownPanel>
+        </div>
+      </Dropdown.Trigger>
+      <Dropdown.Panel>{_renderContent()}</Dropdown.Panel>
     </Dropdown>
   );
 };

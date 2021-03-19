@@ -1,58 +1,7 @@
-import ButtonPrimary from "components/ButtonPrimary/ButtonPrimary";
+import ButtonPrimary from "components/Button/ButtonPrimary";
+import { MEGAMENU, NavItemType } from "data/navigation";
 import React from "react";
 import { NavLink } from "react-router-dom";
-import { NavItemType } from "./Navigation";
-
-const MEGAMENU = [
-  {
-    title: "Clothing",
-    items: [
-      "Blouses",
-      "Dresses",
-      "Footwear",
-      "Hats",
-      "Hoodies",
-      "T-shirts",
-      "Trousers",
-    ],
-  },
-  {
-    title: "Kitchen",
-    items: [
-      "Blenders",
-      "Colanders",
-      "Kettles",
-      "Knives",
-      "Pots & Pans",
-      "T-shirts",
-      "Toasters",
-    ],
-  },
-  {
-    title: "Electronics",
-    items: [
-      "Cameras",
-      "DVD Players",
-      "Headphones",
-      "MP3 Players",
-      "Radios  ",
-      "Televisions",
-      "Trousers",
-    ],
-  },
-  {
-    title: "Music",
-    items: [
-      "Albums",
-      "Singles",
-      "MP3",
-      "Posters",
-      "Radios  ",
-      "Hoodies",
-      "Dresses",
-    ],
-  },
-];
 
 export interface NavigationItemProps {
   item: NavItemType;
