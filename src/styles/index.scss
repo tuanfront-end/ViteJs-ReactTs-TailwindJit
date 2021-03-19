@@ -1,0 +1,81 @@
+// Required Core Stylesheet
+@import "node_modules/@glidejs/glide/src/assets/sass/glide.core";
+// Optional Theme Stylesheet
+// @import "node_modules/@glidejs/glide/src/assets/sass/glide.theme";
+//
+@import "./typographys.scss";
+@import "./lineClamp";
+@import "./toolTip";
+@import "./glidejs";
+@import "./noUiSlider";
+@import "./imageZoomLens";
+//
+
+.tnnc-grid-col-section-hero {
+  grid-template-columns: 5fr 0.5fr 5fr;
+  grid-template-rows: auto;
+}
+//
+
+// === wil-glidejs-slide-fade === //
+
+.ttnc-transform-none {
+  transform: none !important;
+  will-change: unset !important;
+  transition: none !important;
+}
+
+.ttnc-stop-scrolling {
+  height: 100vh !important;
+  overflow: hidden !important;
+}
+
+// ==== hero3
+.hero3-item-container {
+  background: #68b0ab;
+  height: 60vh;
+  @media (min-width: 640px) {
+    height: 70vh;
+  }
+  @media (min-width: 768px) {
+    height: 75vh;
+  }
+  @media (min-width: 1024px) {
+    height: 85vh;
+  }
+  @media (min-width: 1536px) {
+    height: 90vh;
+  }
+}
+
+.hero3-title {
+  font-size: 60px;
+  @media (min-width: 480px) {
+    font-size: 90px;
+  }
+  @media (min-width: 640px) {
+    font-size: 150px;
+  }
+  @media (min-width: 1024px) {
+    font-size: 180px;
+  }
+  @media (min-width: 1280px) {
+    font-size: 200px;
+  }
+  @media (min-width: 1536px) {
+    font-size: 300px;
+  }
+}
+
+//
+.ttnc-hero1-bg {
+  object-position: 70% bottom;
+
+  @media (min-width: 640px) {
+    object-position: 60% bottom;
+  }
+
+  @media (min-width: 1280px) {
+    object-position: center bottom;
+  }
+}
