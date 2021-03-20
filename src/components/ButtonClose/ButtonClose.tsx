@@ -1,7 +1,7 @@
 import React from "react";
 export interface ButtonClose {
   containerClassName?: string;
-  onClick?: () => {};
+  onClick?: () => void;
 }
 
 const ButtonClose: React.FC<ButtonClose> = ({

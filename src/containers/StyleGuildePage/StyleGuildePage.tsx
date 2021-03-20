@@ -1,3 +1,4 @@
+import Modal from "components/Modal/Modal";
 import React from "react";
 import GuildAvatar from "./GuildAvatar";
 import GuildeButtons from "./GuildeButtons";
@@ -9,6 +10,14 @@ const StyleGuildePage = () => {
       <GuildeButtons />
       <GuildAvatar />
       <GuildeDropdow />
+      <div className="container">
+        <Modal>
+          <Modal.Trigger></Modal.Trigger>
+          <Modal.Panel></Modal.Panel>
+        </Modal>
+        <br />
+        <input type="number" name="sfe" id="" />
+      </div>
     </div>
   );
 };

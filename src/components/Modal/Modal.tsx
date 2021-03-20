@@ -1,114 +1,196 @@
+import React, { Children, ReactNode, useState } from "react";
+import ReactDOM from "react-dom";
 import Button from "components/Button/Button";
 import ButtonClose from "components/ButtonClose/ButtonClose";
-import React from "react";
-export interface ModalProps {
-  id: string;
-  renderButtonOpen?: React.ReactNode;
-  modalTitle?: string;
-  renderBody?: React.ReactNode;
-  renderFooter?: React.ReactNode;
+import Trigger from "./Trigger";
+import Panel from "./Panel";
+import { Transition } from "@headlessui/react";
+export interface ModalProps {}
+
+interface TriggerStatic {
+  Trigger: typeof Trigger;
+}
+interface PanelStatic {
+  Panel: typeof Panel;
 }
 
-const Modal: React.FC<ModalProps> = ({
-  id,
-  renderButtonOpen,
-  renderFooter,
-  modalTitle = "Modal Title",
-  renderBody,
+const Modal: React.FC<ModalProps> & TriggerStatic & PanelStatic = ({
+  children,
 }) => {
-  const _renderHeader = () => {
-    return (
-      <div className="flex items-start justify-between px-6 py-4 pb-3 border-b border-solid border-neutral-700">
-        <div className="flex text-neutral-300">
-          <svg
-            xmlns="http://www.w3.org/2000/svg"
-            viewBox="0 0 20 20"
-            fill="currentColor"
-            className="w-6 h-6 mr-2"
-          >
-            <path
-              fillRule="evenodd"
-              d="M18 10a8 8 0 11-16 0 8 8 0 0116 0zm-7-4a1 1 0 11-2 0 1 1 0 012 0zM9 9a1 1 0 000 2v3a1 1 0 001 1h1a1 1 0 100-2v-3a1 1 0 00-1-1H9z"
-              clipRule="evenodd"
-            />
-          </svg>
-          {modalTitle && (
-            <h3 className="text-f5 font-bold text-black truncate">
-              {modalTitle}
-            </h3>
-          )}
-        </div>
-        <ButtonClose modalToggleId={id} />
-      </div>
-    );
-  };
+  const [isVisable, setIsVisable] = useState(false);
 
-  const _renderBody = () => {
-    return (
-      <div className="relative p-6 flex-auto">
-        {renderBody || (
-          <p className="my-4 leading-relaxed">
-            I always felt like I could do anything. That’s the main thing people
-            are controlled by! Thoughts- their perception of themselves! They're
-            slowed down by their perception of themselves. If you're taught you
-            can’t do anything, you won’t do anything. I was taught I could do
-            everything.
-          </p>
-        )}
-      </div>
-    );
-  };
+  const handleOpenModal = () => setIsVisable(true);
+  const handleClickClose = () => setIsVisable(false);
 
-  const _renderFooter = () => {
-    if (renderFooter) {
-      return renderFooter;
-    }
+  const renderPanel = (panelChild: ReactNode) => {
     return (
-      <div className="flex justify-end px-6 py-4 space-x-4 border-t border-solid border-neutral-700 rounded-b">
-        <Button modalToggleId={id}>small button</Button>
-        <Button modalToggleId={id}>small button</Button>
-      </div>
-    );
-  };
+      <div className="ttnc-modal">
+        {/* <!-- This example requires Tailwind CSS v2.0+ --> */}
+        <div className="fixed z-10 inset-0 overflow-y-auto">
+          <div className="flex items-end justify-center min-h-screen pt-4 px-4 pb-20 text-center sm:block sm:p-0">
+            {/* <!--
+          Background overlay, show/hide based on modal state.
 
-  const _renderButtonOpen = () => {
-    if (renderButtonOpen) {
-      return renderButtonOpen;
-    }
-    return (
-      <Button url="" size="small" modalToggleId={id}>
-        Open regular modal
-      </Button>
-    );
-  };
-  return (
-    <div>
-      {_renderButtonOpen()}
-      <div
-        className="hidden overflow-x-hidden overflow-y-auto fixed inset-0 z-max outline-none focus:outline-none justify-center items-center"
-        id={id}
-        data-ttnc-modal-toggle-class-in-from={undefined}
-        data-ttnc-modal-toggle-class-in-to={undefined}
-      >
-        <div className="relative w-auto my-6 mx-auto max-w-3xl">
-          {/* <!--content--> */}
-          <div className="border-0 shadow-lg relative flex flex-col w-full bg-white outline-none focus:outline-none">
-            {/* <!--header--> */}
-            {_renderHeader()}
-            {/* <!--body--> */}
-            {_renderBody()}
-            {/* <!--footer--> */}
-            {_renderFooter()}
+          Entering: "ease-out duration-300"
+            From: "opacity-0"
+            To: "opacity-100"
+          Leaving: "ease-in duration-200"
+            From: "opacity-100"
+            To: "opacity-0"
+        --> */}
+            <Transition
+              show={isVisable}
+              enter="transition duration-100 transform"
+              enterFrom="opacity-0 -translate-x-14"
+              enterTo="opacity-100 translate-x-0"
+              leave="transition duration-150 transform"
+              leaveFrom="opacity-100 translate-x-0"
+              leaveTo="opacity-0 -translate-x-14"
+            >
+              <div
+                className="fixed inset-0 transition-opacity"
+                aria-hidden="true"
+                onClick={handleClickClose}
+              >
+                <div className="absolute inset-0 bg-gray-500 opacity-75"></div>
+              </div>
+            </Transition>
+
+            {/* <!-- This element is to trick the browser into centering the modal contents. --> */}
+            <span
+              className="hidden sm:inline-block sm:align-middle sm:h-screen"
+              aria-hidden="true"
+            >
+              &#8203;
+            </span>
+            {/* <!--
+          Modal panel, show/hide based on modal state.
+
+          Entering: "ease-out duration-300"
+            From: "opacity-0 translate-y-4 sm:translate-y-0 sm:scale-95"
+            To: "opacity-100 translate-y-0 sm:scale-100"
+          Leaving: "ease-in duration-200"
+            From: "opacity-100 translate-y-0 sm:scale-100"
+            To: "opacity-0 translate-y-4 sm:translate-y-0 sm:scale-95"
+        --> */}
+            <div
+              className="inline-block align-bottom bg-white rounded-lg text-left overflow-x-hidden shadow-xl transform transition-all sm:my-8 sm:align-middle sm:max-w-3xl sm:w-full max-h-[90vh] overflow-y-auto relative"
+              role="dialog"
+              aria-modal="true"
+              aria-labelledby="modal-headline"
+            >
+              <ButtonClose
+                containerClassName="absolute top-2 right-2 p-1"
+                onClick={handleClickClose}
+              />
+              {panelChild || (
+                <React.Fragment>
+                  <div className="bg-white px-4 pt-5 pb-4 sm:p-6 sm:pb-4">
+                    <div className="sm:flex sm:items-start">
+                      <div className="mx-auto flex-shrink-0 flex items-center justify-center h-12 w-12 rounded-full bg-red-100 sm:mx-0 sm:h-10 sm:w-10">
+                        {/* <!-- Heroicon name: outline/exclamation --> */}
+                        <svg
+                          className="h-6 w-6 text-red-600"
+                          xmlns="http://www.w3.org/2000/svg"
+                          fill="none"
+                          viewBox="0 0 24 24"
+                          stroke="currentColor"
+                          aria-hidden="true"
+                        >
+                          <path
+                            stroke-linecap="round"
+                            stroke-linejoin="round"
+                            stroke-width="2"
+                            d="M12 9v2m0 4h.01m-6.938 4h13.856c1.54 0 2.502-1.667 1.732-3L13.732 4c-.77-1.333-2.694-1.333-3.464 0L3.34 16c-.77 1.333.192 3 1.732 3z"
+                          />
+                        </svg>
+                      </div>
+                      <div className="mt-3 text-center sm:mt-0 sm:ml-4 sm:text-left">
+                        <h3
+                          className="text-lg leading-6 font-medium text-gray-900"
+                          id="modal-headline"
+                        >
+                          Deactivate account
+                        </h3>
+                        <div className="mt-2">
+                          <p className="text-gray-500">
+                            eius architecto vitae incidunt ab atque repellat
+                            mollitia! Sapiente maxime labore eos ex totam esse,
+                            cum mollitia suscipit et odit quo harum repellendus
+                            voluptates architecto voluptate quod similique,
+                            porro iste nam. Repellendus tempore maiores iure
+                            nostrum pariatur itaque aut dicta ab! Consectetur
+                            ipsa sit perspiciatis sapiente, dolores porro eaque
+                            aspernatur voluptas, fuga rem tempore ducimus,
+                            cumque ad eveniet!
+                          </p>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                  <div className="bg-gray-50 px-4 py-3 sm:px-6 sm:flex sm:flex-row-reverse">
+                    <button
+                      type="button"
+                      className="w-full inline-flex justify-center rounded-md border border-transparent shadow-sm px-4 py-2 bg-red-600 text-base font-medium text-white hover:bg-red-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-red-500 sm:ml-3 sm:w-auto sm:text-sm"
+                    >
+                      Deactivate
+                    </button>
+                    <button
+                      type="button"
+                      className="mt-3 w-full inline-flex justify-center rounded-md border border-gray-300 shadow-sm px-4 py-2 bg-white text-base font-medium text-gray-700 hover:bg-gray-50 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500 sm:mt-0 sm:ml-3 sm:w-auto sm:text-sm"
+                    >
+                      Cancel
+                    </button>
+                  </div>
+                </React.Fragment>
+              )}
+            </div>
           </div>
         </div>
       </div>
-      <div
-        className="hidden opacity-30 fixed inset-0 z-40 bg-black"
-        id={`${id}-backdrop`}
-        data-ttnc-modal-toggle={id}
-      ></div>
-    </div>
+    );
+  };
+
+  const renderButtonOpen = (triggerChild: ReactNode) => {
+    if (triggerChild) {
+      return triggerChild;
+    }
+    return <Button onClick={handleOpenModal}>Open regular modal</Button>;
+  };
+
+  const renderChil = (
+    child: React.ReactElement<any, string | React.JSXElementConstructor<any>>
+  ) => {
+    if (!child) return null;
+
+    if (child.type === Trigger) {
+      return renderButtonOpen(child.props.children);
+    }
+
+    if (child.type === Panel) {
+      return ReactDOM.createPortal(
+        renderPanel(child.props.children),
+        document.getElementById("modal-root") as HTMLDivElement
+      );
+    }
+    return "Child of Modal is Modal.Trigger and Modal.Panel!";
+  };
+
+  return (
+    <React.Fragment>
+      {Children.map(children, (child) =>
+        renderChil(
+          child as React.ReactElement<
+            any,
+            string | React.JSXElementConstructor<any>
+          >
+        )
+      )}
+    </React.Fragment>
   );
 };
+
+Modal.Trigger = Trigger;
+Modal.Panel = Panel;
 
 export default Modal;

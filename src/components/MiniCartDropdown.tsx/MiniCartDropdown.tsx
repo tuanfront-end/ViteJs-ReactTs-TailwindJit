@@ -3,6 +3,7 @@ import placeholder from "images/placeholder.jpg";
 import Dropdown from "components/Dropdown/Dropdown";
 import MyLink from "components/MyLink/MyLink";
 import ButtonPrimary from "components/Button/ButtonPrimary";
+import ButtonSecondary from "components/Button/ButtonSecondary";
 
 const MiniCartDropdown = () => {
   const _renderItem = (index: number) => {
@@ -47,8 +48,7 @@ const MiniCartDropdown = () => {
             Subtotal: $215.14
           </MyLink>
           <ButtonPrimary href="/cart">View Cart</ButtonPrimary>
-
-          <ButtonPrimary href="/checkout">Checkout</ButtonPrimary>
+          <ButtonSecondary href="/checkout">Checkout</ButtonSecondary>
         </div>
       </div>
     );

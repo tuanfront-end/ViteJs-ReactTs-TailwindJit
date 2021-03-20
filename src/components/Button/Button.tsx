@@ -12,7 +12,7 @@ export interface ButtonProps {
   type?: ButtonHTMLAttributes<HTMLButtonElement>["type"];
   href?: keyof LocationStates | "#root" | "";
   size?: string;
-  onClick?: () => {};
+  onClick?: () => void;
 }
 
 const Button: FC<ButtonProps> = ({

@@ -5,11 +5,11 @@ import React, {
   useEffect,
   useRef,
   Children,
-} from 'react';
-import { usePopper } from 'react-popper';
-import { Placement } from '@popperjs/core';
-import Panel from './Panel';
-import Trigger from './Trigger';
+} from "react";
+import { usePopper } from "react-popper";
+import { Placement } from "@popperjs/core";
+import Panel from "./Panel";
+import Trigger from "./Trigger";
 
 export interface DropdownProps {
   containerClassName?: string;
@@ -27,10 +27,10 @@ interface PanelStatic {
 
 const Dropdown: FC<DropdownProps> & TriggerStatic & PanelStatic = ({
   children,
-  triggerText = 'Options',
+  triggerText = "Options",
   onChange = () => {},
-  containerClassName = '',
-  popperPlacement = 'bottom-start',
+  containerClassName = "",
+  popperPlacement = "bottom-start",
 }) => {
   const containerRef = useRef(null);
   const [
@@ -38,13 +38,13 @@ const Dropdown: FC<DropdownProps> & TriggerStatic & PanelStatic = ({
     setReferenceElement,
   ] = useState<HTMLButtonElement | null>(null);
   const [popperElement, setPopperElement] = useState<HTMLDivElement | null>(
-    null,
+    null
   );
 
   const { styles, attributes, update } = usePopper(
     referenceElement,
     popperElement,
-    { placement: popperPlacement },
+    { placement: popperPlacement }
   );
 
   const [isVisible, setVisible] = useState<boolean>(false);
@@ -59,9 +59,9 @@ const Dropdown: FC<DropdownProps> & TriggerStatic & PanelStatic = ({
 
   useEffect(() => {
     // listen for clicks and close dropdown on body
-    document.addEventListener('mousedown', handleDocumentClick);
+    document.addEventListener("mousedown", handleDocumentClick);
     return () => {
-      document.removeEventListener('mousedown', handleDocumentClick);
+      document.removeEventListener("mousedown", handleDocumentClick);
     };
   }, []);
 
@@ -113,7 +113,6 @@ const Dropdown: FC<DropdownProps> & TriggerStatic & PanelStatic = ({
         style={styles.popper}
         role="tooltip"
         aria-labelledby="options-menu"
-        // eslint-disable-next-line react/jsx-props-no-spreading
         {...attributes.popper}
       >
         {panelChild || (
@@ -148,18 +147,20 @@ const Dropdown: FC<DropdownProps> & TriggerStatic & PanelStatic = ({
     );
   };
 
-  const renderChildren = (
-    { type, props }: React.ReactElement<
-    { children: React.ReactNode }, string | React.JSXElementConstructor<any>
-    >,
-  ) => {
+  const renderChildren = ({
+    type,
+    props,
+  }: React.ReactElement<
+    { children: React.ReactNode },
+    string | React.JSXElementConstructor<any>
+  >) => {
     if (type === Panel) {
       return renderPanel(props.children);
     }
     if (type === Trigger) {
       return renderTrigger(props.children);
     }
-    return 'The Children must Dropdown.Trigger or Dropdown.Panel';
+    return "The Children must Dropdown.Trigger or Dropdown.Panel";
   };
 
   return (
@@ -168,9 +169,12 @@ const Dropdown: FC<DropdownProps> & TriggerStatic & PanelStatic = ({
       ref={containerRef}
     >
       {Children.map(children, (child) => {
-        if (!child) return '';
+        if (!child) return "";
         return renderChildren(
-          child as React.ReactElement<any, string | React.JSXElementConstructor<any>>,
+          child as React.ReactElement<
+            any,
+            string | React.JSXElementConstructor<any>
+          >
         );
       })}
     </div>

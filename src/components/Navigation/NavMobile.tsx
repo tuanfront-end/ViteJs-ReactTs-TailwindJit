@@ -8,9 +8,13 @@ import { NavLink } from "react-router-dom";
 
 export interface NavMobileProps {
   data?: NavItemType[];
+  onClickClose?: () => void;
 }
 
-const NavMobile: React.FC<NavMobileProps> = ({ data = NAVDATABASE }) => {
+const NavMobile: React.FC<NavMobileProps> = ({
+  data = NAVDATABASE,
+  onClickClose,
+}) => {
   const _renderMenuChild = (item: NavItemType) => {
     return (
       <div
@@ -64,12 +68,13 @@ const NavMobile: React.FC<NavMobileProps> = ({ data = NAVDATABASE }) => {
   };
 
   return (
-    <div className="overflow-y-auto w-full md:w-80 p-2 transition transform shadow-lg ring-1 ring-black ring-opacity-20 bg-white dark:bg-gray-800 divide-y-2 divide-gray-100 dark:divide-gray-700">
+    <div className="overflow-y-auto w-full md:w-80 h-screen p-2 transition transform shadow-lg ring-1 ring-black ring-opacity-20 bg-white dark:bg-gray-800 divide-y-2 divide-gray-100 dark:divide-gray-700">
       <div className="py-6 px-5">
         <Logo />
         <div className="flex flex-col mt-5 text-gray-700 dark:text-gray-300 text-sm">
           <span>Contact us: ++8801682530219</span>
           <span>Mail us: eoard@gmail.com</span>
+
           <div className="flex space-x-3 text-gray-900 dark:text-gray-100 text-xl mt-4">
             <a href="#root">
               <i className="lab la-facebook-f"></i>
@@ -85,8 +90,11 @@ const NavMobile: React.FC<NavMobileProps> = ({ data = NAVDATABASE }) => {
             </a>
           </div>
         </div>
-        <span className="absolute right-4 top-4">
-          <ButtonClose containerClassName="text-black dark:text-white" />
+        <span className="absolute right-2 top-2 p-1">
+          <ButtonClose
+            onClick={onClickClose}
+            containerClassName="text-black dark:text-white"
+          />
         </span>
       </div>
       <nav className="flex flex-col items-start py-6 px-5 space-y-2">
