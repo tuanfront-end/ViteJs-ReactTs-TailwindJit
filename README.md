@@ -1,1 +1,1 @@
-# zango-vitejs
+# TailwindJIT + vitejs + ReactTS
