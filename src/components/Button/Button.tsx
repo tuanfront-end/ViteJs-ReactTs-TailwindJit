@@ -10,7 +10,8 @@ export interface ButtonProps {
   loading?: boolean;
   disabled?: boolean;
   type?: ButtonHTMLAttributes<HTMLButtonElement>["type"];
-  href?: keyof LocationStates | "#root" | "";
+  href?: keyof LocationStates | string;
+  targetBlank?: boolean;
   size?: string;
   onClick?: () => void;
 }
@@ -23,11 +24,12 @@ const Button: FC<ButtonProps> = ({
   disabled = false,
   href,
   children,
+  targetBlank,
   type,
   loading,
   onClick = () => {},
 }) => {
-  const CLASSES = `ttnc-button ${containerClassName} ${textSizeClass} ${spacingClass} ${colorClass}`;
+  const CLASSES = `ttnc-button inline-flex items-center ${containerClassName} ${textSizeClass} ${spacingClass} ${colorClass}`;
 
   const _renderLoading = () => {
     return (
@@ -56,7 +58,13 @@ const Button: FC<ButtonProps> = ({
 
   if (!!href) {
     return (
-      <a href={href} className={`${CLASSES}`} onClick={onClick}>
+      <a
+        href={href}
+        target={targetBlank ? "_blank" : undefined}
+        className={`${CLASSES}`}
+        onClick={onClick}
+        rel="noopener noreferrer"
+      >
         {children || `This is Link`}
       </a>
     );
@@ -65,7 +73,7 @@ const Button: FC<ButtonProps> = ({
   return (
     <button
       disabled={disabled || loading}
-      className={`flex items-center ${CLASSES}`}
+      className={` ${CLASSES}`}
       onClick={onClick}
       type={type}
     >

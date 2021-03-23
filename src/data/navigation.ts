@@ -1,15 +1,96 @@
 import { v4 as uuidv4 } from "uuid";
 
 import { LocationStates } from "routers/types";
-
 export interface NavItemType {
   id: string;
   name: string;
-  link: keyof LocationStates | "#";
+  link: keyof LocationStates | string;
+  targetBlank?: boolean;
   children?: NavItemType[];
   isActive?: boolean;
   isMegamenu?: boolean;
+  megaMenu?: {
+    menuCols: {
+      title: string;
+      items: NavItemType[];
+    }[];
+    lastCol: {
+      title: string;
+      text: string;
+      button: {
+        id: string;
+        name: string;
+        link: keyof LocationStates | string;
+        targetBlank?: boolean;
+      };
+    };
+  };
 }
+
+export const MEGAMENU: NavItemType["megaMenu"] = {
+  menuCols: [
+    {
+      title: "Clothing",
+      items: [
+        { id: uuidv4(), name: "Blouses", link: "ttnc.com", targetBlank: true },
+        { id: uuidv4(), name: "Dresses", link: "ttnc.com", targetBlank: true },
+        { id: uuidv4(), name: "Footwear", link: "ttnc.com", targetBlank: true },
+        { id: uuidv4(), name: "Hats", link: "ttnc.com", targetBlank: true },
+        { id: uuidv4(), name: "Hoodies", link: "ttnc.com", targetBlank: true },
+        { id: uuidv4(), name: "T-shirts", link: "ttnc.com", targetBlank: true },
+        { id: uuidv4(), name: "Trousers", link: "ttnc.com", targetBlank: true },
+      ],
+    },
+    {
+      title: "Kitchen",
+      items: [
+        { id: uuidv4(), name: "Blenders", link: "/" },
+        { id: uuidv4(), name: "Colanders", link: "/" },
+        { id: uuidv4(), name: "Kettles", link: "/" },
+        { id: uuidv4(), name: "Knives", link: "/" },
+        { id: uuidv4(), name: "Pots & Pans", link: "/" },
+        { id: uuidv4(), name: "T-shirts", link: "/" },
+        { id: uuidv4(), name: "Toasters", link: "/" },
+      ],
+    },
+    {
+      title: "Electronics",
+      items: [
+        { id: uuidv4(), name: "Cameras", link: "/" },
+        { id: uuidv4(), name: "DVD Players", link: "/" },
+        { id: uuidv4(), name: "Headphones", link: "/" },
+        { id: uuidv4(), name: "MP3 Players", link: "/" },
+        { id: uuidv4(), name: "Radios", link: "/" },
+        { id: uuidv4(), name: "Televisions", link: "/" },
+        { id: uuidv4(), name: "Toasters", link: "/" },
+      ],
+    },
+    {
+      title: "Music",
+      items: [
+        { id: uuidv4(), name: "Albums", link: "/" },
+        { id: uuidv4(), name: "DVD Players", link: "/" },
+        { id: uuidv4(), name: "Singles", link: "/" },
+        { id: uuidv4(), name: "MP3 Players", link: "/" },
+        { id: uuidv4(), name: "Radios", link: "/" },
+        { id: uuidv4(), name: "Posters", link: "/" },
+        { id: uuidv4(), name: "Toasters", link: "/" },
+      ],
+    },
+  ],
+  lastCol: {
+    title: "Mega Menus Extension",
+    text:
+      "If you would like to display a full width menu like you see here this can be achieved by using our Mega Menus extension for Storefront.",
+    button: {
+      id: uuidv4(),
+      name: "Shop now",
+      link: "abc.com",
+      targetBlank: true,
+    },
+  },
+};
+
 export const NAVDATABASE: NavItemType[] = [
   {
     id: uuidv4(),
@@ -36,7 +117,13 @@ export const NAVDATABASE: NavItemType[] = [
     ],
   },
   { id: uuidv4(), name: "About", link: "/about-us" },
-  { id: uuidv4(), name: "Megamenu", link: "/", isMegamenu: true },
+  {
+    id: uuidv4(),
+    name: "Megamenu",
+    link: "/",
+    isMegamenu: true,
+    megaMenu: MEGAMENU,
+  },
   {
     id: uuidv4(),
     name: "Blog",
@@ -67,57 +154,6 @@ export const NAVDATABASE: NavItemType[] = [
           { id: uuidv4(), name: "Checkout", link: "/checkout" },
         ],
       },
-    ],
-  },
-];
-
-export const MEGAMENU = [
-  {
-    title: "Clothing",
-    items: [
-      "Blouses",
-      "Dresses",
-      "Footwear",
-      "Hats",
-      "Hoodies",
-      "T-shirts",
-      "Trousers",
-    ],
-  },
-  {
-    title: "Kitchen",
-    items: [
-      "Blenders",
-      "Colanders",
-      "Kettles",
-      "Knives",
-      "Pots & Pans",
-      "T-shirts",
-      "Toasters",
-    ],
-  },
-  {
-    title: "Electronics",
-    items: [
-      "Cameras",
-      "DVD Players",
-      "Headphones",
-      "MP3 Players",
-      "Radios  ",
-      "Televisions",
-      "Trousers",
-    ],
-  },
-  {
-    title: "Music",
-    items: [
-      "Albums",
-      "Singles",
-      "MP3",
-      "Posters",
-      "Radios  ",
-      "Hoodies",
-      "Dresses",
     ],
   },
 ];

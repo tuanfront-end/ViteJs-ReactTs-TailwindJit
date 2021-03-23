@@ -1,5 +1,5 @@
 import ButtonPrimary from "components/Button/ButtonPrimary";
-import { MEGAMENU, NavItemType } from "data/navigation";
+import { NavItemType } from "data/navigation";
 import React from "react";
 import { NavLink } from "react-router-dom";
 
@@ -9,21 +9,32 @@ export interface NavigationItemProps {
 }
 
 const NavigationItem: React.FC<NavigationItemProps> = ({ item, index }) => {
-  const _renderMegamenuItem = (item: any, index: number) => {
+  const _renderMegaMenuItem = (
+    value: {
+      title: string;
+      items: NavItemType[];
+    },
+    index: number
+  ) => {
     return (
       <div className="smm-span-2" key={index}>
         <aside className="widget widget_nav_menu">
-          <h3 className="text-base font-medium mb-3">{item.title}</h3>
+          <h3 className="text-base font-medium mb-3">{value.title}</h3>
           <div className="menu-mega-menu-4th-container">
             <ul className="menu space-y-2 text-gray-700 dark:text-gray-300">
-              {item.items.map((i: string) => {
+              {value.items.map((menu: NavItemType, index: number) => {
                 return (
                   <li
-                    key={i}
+                    key={String(index)}
                     className="menu-item menu-item-type-taxonomy menu-item-object-product_cat menu-item-7095"
                   >
-                    <a className="hover:text-secondary" href="#root">
-                      {i}
+                    <a
+                      className="hover:text-secondary"
+                      href={menu.link}
+                      target={menu.targetBlank ? "_blank" : undefined}
+                      rel="noopener noreferrer"
+                    >
+                      {menu.name}
                     </a>
                   </li>
                 );
@@ -35,29 +46,33 @@ const NavigationItem: React.FC<NavigationItemProps> = ({ item, index }) => {
     );
   };
 
-  const _renderMegamenu = () => {
+  const _renderMegamenu = (megaMenu: NavItemType["megaMenu"]) => {
     return (
       <div className="sub-menu absolute px-2 z-50 left-0 top-full w-full capitalize text-base">
         <ul className="bg-white dark:bg-gray-800 shadow-lg ring-1 ring-black ring-opacity-5 text-gray-900 dark:text-gray-100 md:p-12 xl:p-20">
           <li>
             <div className="smm-mega-menu">
               <div className="grid grid-cols-6">
-                {MEGAMENU.map(_renderMegamenuItem)}
-                <div className="smm-span-4 smm-last col-span-2 col-end-7">
-                  <aside className="widget widget_text">
-                    <h3 className="text-base font-medium mb-2">
-                      Mega Menus Extension
-                    </h3>
-                    <div className="textwidget text-gray-500 dark:text-gray-400">
-                      <p className="mb-3">
-                        If you would like to display a full width menu like you
-                        see here this can be achieved by using our Mega Menus
-                        extension.
-                      </p>
-                      <ButtonPrimary>shop now</ButtonPrimary>
-                    </div>
-                  </aside>
-                </div>
+                {megaMenu?.menuCols.map(_renderMegaMenuItem)}
+                {megaMenu?.lastCol && (
+                  <div className="smm-span-4 smm-last col-span-2 col-end-7">
+                    <aside className="widget widget_text">
+                      <h3 className="text-base font-medium mb-2">
+                        {megaMenu?.lastCol.title}
+                      </h3>
+                      <div className="textwidget text-gray-500 dark:text-gray-400">
+                        <p className="mb-3">{megaMenu.lastCol.text}</p>
+                        <ButtonPrimary
+                          targetBlank={megaMenu?.lastCol.button.targetBlank}
+                          href={megaMenu.lastCol.button.link}
+                        >
+                          <span>{megaMenu?.lastCol.button.name}</span>
+                          <i className="ml-2 las la-arrow-right"></i>
+                        </ButtonPrimary>
+                      </div>
+                    </aside>
+                  </div>
+                )}
               </div>
             </div>
           </li>
@@ -117,7 +132,7 @@ const NavigationItem: React.FC<NavigationItemProps> = ({ item, index }) => {
           )}
         </NavLink>
         {!isMegamenu && item.children && _renderMenuChild(item)}
-        {isMegamenu && _renderMegamenu()}
+        {isMegamenu && _renderMegamenu(item.megaMenu)}
       </div>
     );
   };

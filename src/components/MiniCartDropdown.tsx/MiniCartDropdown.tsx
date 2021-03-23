@@ -55,21 +55,21 @@ const MiniCartDropdown = () => {
   };
 
   return (
-    <Dropdown popperPlacement="bottom-start">
-      <Dropdown.Trigger>
-        <div className="py-1 px-2.5 text-opacity-95 hover:text-opacity-100">
-          <span className="relative inline-flex rounded-md shadow-sm">
-            <i className="las la-shopping-bag"></i>
-            <span className="flex absolute h-4 w-4 top-0 right-0 -mt-1 -mr-1">
-              <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-secondary opacity-75"></span>
-              <span className="relative inline-flex items-center justify-center rounded-full h-4 w-4 bg-secondary text-white text-xs font-medium text-[9]">
-                2
-              </span>
+    <Dropdown>
+      <Dropdown.Trigger triggerClassName="py-1 px-2.5 text-opacity-95 hover:text-opacity-100">
+        <span className="relative inline-flex rounded-md shadow-sm">
+          <i className="las la-shopping-bag"></i>
+          <span className="flex absolute h-4 w-4 top-0 right-0 -mt-1 -mr-1">
+            <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-secondary opacity-75"></span>
+            <span className="relative inline-flex items-center justify-center rounded-full h-4 w-4 bg-secondary text-white text-xs font-medium text-[9]">
+              2
             </span>
           </span>
-        </div>
+        </span>
       </Dropdown.Trigger>
-      <Dropdown.Panel>{_renderContent()}</Dropdown.Panel>
+      <Dropdown.Panel panelClassName="absolute right-0 origin-top-left w- mt-2 top-full bg-white border border-gray-200 divide-y divide-gray-100 rounded-md shadow-lg outline-none">
+        {_renderContent()}
+      </Dropdown.Panel>
     </Dropdown>
   );
 };

@@ -28,10 +28,19 @@ const MenuBar: React.FC<MenuBarProps> = ({ renderButtonBar }) => {
             <div className="z-10 relative">
               <NavMobile onClickClose={handleCloseMenu} />
             </div>
-            <div
-              onClick={handleCloseMenu}
-              className="opacity-40 fixed inset-0 z-0 bg-black"
-            ></div>
+            <Transition.Child
+              enter="transition duration-150"
+              enterFrom="opacity-0"
+              enterTo="opacity-100"
+              leave="transition duration-150"
+              leaveFrom="opacity-100"
+              leaveTo="opacity-0"
+            >
+              <div
+                onClick={handleCloseMenu}
+                className="opacity-40 fixed inset-0 z-0 bg-black"
+              ></div>
+            </Transition.Child>
           </React.Fragment>
         </Transition>
       </div>
@@ -51,13 +60,6 @@ const MenuBar: React.FC<MenuBarProps> = ({ renderButtonBar }) => {
         )}
       </div>
 
-      {/* <--- Portals content ---> */}
-      {/* {!isVisable
-        ? ""
-        : ReactDOM.createPortal(
-            renderContent(),
-            document.getElementById("modal-root") as HTMLDivElement
-          )} */}
       {ReactDOM.createPortal(
         renderContent(),
         document.getElementById("modal-root") as HTMLDivElement
