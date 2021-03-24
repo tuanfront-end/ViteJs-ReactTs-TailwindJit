@@ -1,31 +1,5 @@
-import { v4 as uuidv4 } from "uuid";
-
-import { LocationStates } from "routers/types";
-export interface NavItemType {
-  id: string;
-  name: string;
-  link: keyof LocationStates | string;
-  targetBlank?: boolean;
-  children?: NavItemType[];
-  isActive?: boolean;
-  isMegamenu?: boolean;
-  megaMenu?: {
-    menuCols: {
-      title: string;
-      items: NavItemType[];
-    }[];
-    lastCol: {
-      title: string;
-      text: string;
-      button: {
-        id: string;
-        name: string;
-        link: keyof LocationStates | string;
-        targetBlank?: boolean;
-      };
-    };
-  };
-}
+import { NavItemType } from "./types";
+import { nanoid as uuidv4 } from "@reduxjs/toolkit";
 
 export const MEGAMENU: NavItemType["megaMenu"] = {
   menuCols: [

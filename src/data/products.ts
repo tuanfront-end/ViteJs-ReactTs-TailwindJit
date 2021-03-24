@@ -1,15 +1,8 @@
 import placeholderImg from "images/placeholder.jpg";
-import { v4 as uuidv4 } from "uuid";
 
-export interface ProductType {
-  id: string;
-  img: string;
-  gallery?: string[];
-  name: string;
-  price: string;
-  oldPrice?: string;
-  saleUp?: string;
-}
+import { nanoid as uuidv4 } from "@reduxjs/toolkit";
+
+import { ProductType } from "./types";
 
 export const PRODUCTS_1: ProductType[] = [
   {
